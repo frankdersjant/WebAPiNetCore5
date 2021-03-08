@@ -57,7 +57,7 @@ namespace WebAPiNetcore5
 
             app.UseRouting();
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
             //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
