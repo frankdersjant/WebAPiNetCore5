@@ -68,11 +68,7 @@ namespace WebAPiNetcore5.Installers
                         new string[] { }
                         }
                 });
-        });
-
-
-            //https://pradeeploganathan.com/rest/add-security-requirements-oas3-swagger-netcore3-1-using-swashbuckle/
-
+            });
         }
     }
 }
