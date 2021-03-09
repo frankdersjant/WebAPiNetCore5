@@ -6,6 +6,6 @@ namespace WebApiNetcore5.Services
 {
     public interface ITodosService
     {
-         Task<IEnumerable<Todos>> getAllTodos();
+         Task<IEnumerable<Todos>> getAllTodosAsync();
     }
 }

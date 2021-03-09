@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebApiNetcore5.Services;
+using WebApiNetcore5.DAL; 
 
 namespace WebAPiNetcore5.Installers
 {
@@ -9,13 +11,17 @@ namespace WebAPiNetcore5.Installers
     {
         public void InstallService(IServiceCollection services, IConfiguration Configuration)
         {
-            services.AddDbContext<Data._DbContext>(options =>
+            services.AddScoped<TodoService, TodoService>();
+
+            services.AddDbContext<DataContext>(options =>
                options.UseSqlServer(
                    Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<Data._DbContext>();
+                .AddEntityFrameworkStores<DataContext>();
             services.AddControllersWithViews();
+
+          
         }
     }
 }

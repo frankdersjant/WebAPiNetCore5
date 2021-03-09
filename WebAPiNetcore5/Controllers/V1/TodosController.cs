@@ -16,7 +16,7 @@ namespace WebAPiNetcore5.Controllers.V1
         [HttpGet("api/v1/todos")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _todosService.getAllTodos());
+            return Ok(await _todosService.getAllTodosAsync());
         }
     }
 }

@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebApiNetcore5.DAL\WebApiNetcore5.DAL.csproj" />
     <ProjectReference Include="..\WebApiNetcore5.Model\WebApiNetcore5.Model.csproj" />
   </ItemGroup>
 
