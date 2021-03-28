@@ -29,6 +29,11 @@ namespace WebAPiNetcore5
             {
                 app.UseDeveloperExceptionPage();
 
+                app.UseHttpsRedirection();
+                app.UseStaticFiles();
+
+                app.UseAuthentication();
+
                 ////Swagger - note new usings
                 app.UseSwagger();
 
@@ -46,6 +51,8 @@ namespace WebAPiNetcore5
                 });
                 //end swagger
 
+                //???
+                //app.UseMvc();
             }
             else
             {

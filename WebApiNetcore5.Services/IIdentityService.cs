@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using WebApiNetcore5.Model;
 
 namespace WebApiNetcore5.Services
 {
     public interface IIdentityService
     {
+      
     }
 }

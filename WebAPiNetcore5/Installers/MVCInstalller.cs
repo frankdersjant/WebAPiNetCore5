@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using WebAPiNetcore5.Options;
+using WebAPiNetcore5.Services;
 
 namespace WebAPiNetcore5.Installers
 {
@@ -14,10 +15,14 @@ namespace WebAPiNetcore5.Installers
         public void InstallService(IServiceCollection services, IConfiguration configuration)
         {
             JWTSettings jWTSettings = new JWTSettings();
-            configuration.Bind(nameof(jWTSettings), jWTSettings);
+            configuration.Bind(nameof(jWTSettings), jWTSettings); 
 
             services.AddSingleton(jWTSettings);
 
+            services.AddScoped<IIdentityService, IdentityService>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
+             
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

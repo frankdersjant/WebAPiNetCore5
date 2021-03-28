@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using WebApiNetcore5.Services;
 using WebAPiNetcore5.Controllers.V1.Request;
+using WebAPiNetcore5.Services;
 
 namespace WebAPiNetcore5.Controllers.V1
 {
@@ -14,9 +15,9 @@ namespace WebAPiNetcore5.Controllers.V1
         }
 
         [HttpPost()]
-        public async Task<IActionResult> Register([FromBody] UserRegistrationRequest userREgistrationRequest)
+        public async Task<IActionResult> Register([FromBody] UserRegistrationRequest userRegistrationRequest)
         {
-
+            var authResponse = await _identityService.RegisterAsync(userRegistrationRequest.Email, userRegistrationRequest.Password);
             return Ok();
         }
     }
