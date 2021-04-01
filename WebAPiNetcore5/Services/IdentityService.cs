@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -30,7 +29,7 @@ namespace WebAPiNetcore5.Services
             {
                 return new AuthenticationResult
                 {
-                    ErrorMessage = new[] { "User alllready exists" }
+                    ErrorMessage = new[] { "User allready exists" }
                 };
             }
 
@@ -50,6 +49,11 @@ namespace WebAPiNetcore5.Services
                 };
             }
 
+            return GenerateAuthenticationResultForUser(newUser);
+        }
+
+        private AuthenticationResult GenerateAuthenticationResultForUser(IdentityUser newUser)
+        {
             var TokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -74,6 +78,31 @@ namespace WebAPiNetcore5.Services
                 IsSucces = true,
                 Token = TokenHandler.WriteToken(token)
             };
+        }
+
+        public async Task<AuthenticationResult> LoginAsync(string Email, string Password) 
+        {
+            var foundUser = await _userManager.FindByEmailAsync(Email);
+
+            if (foundUser is not null)
+            {
+                return new AuthenticationResult
+                {
+                    ErrorMessage = new[] { "User allready exists" }
+                };
+            }
+
+            var UserHasValidPasword = await _userManager.CheckPasswordAsync(foundUser, Password);
+
+            if (!UserHasValidPasword)
+            { 
+                return new AuthenticationResult
+                {
+                    ErrorMessage = new[] { "User password incorrect" }
+                };
+            }
+
+            return GenerateAuthenticationResultForUser(foundUser);
         }
     }
 }

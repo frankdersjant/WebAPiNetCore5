@@ -7,5 +7,7 @@ namespace WebAPiNetcore5.Services
     {
         Task<AuthenticationResult> RegisterAsync(string Email, string Password);
 
+        Task<AuthenticationResult> LoginAsync(string Email, string Password);
+
     }
 }

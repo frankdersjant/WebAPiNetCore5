@@ -33,5 +33,24 @@ namespace WebAPiNetcore5.Controllers.V1
                 Token = authResponse.Token
             });
         }
+
+        [HttpPost("api/v1/Login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest userLoginRequest)
+        {
+            var authResponse = await _identityService.LoginAsync(userLoginRequest.Email, userLoginRequest.Password);
+
+            if (!authResponse.IsSucces)
+            {
+                return BadRequest(new AuthFailureResponse
+                {
+                    Errors = authResponse.ErrorMessage
+                });
+            }
+
+            return Ok(new AuthSuccesResponse
+            {
+                Token = authResponse.Token
+            });
+        }
     }
 }
