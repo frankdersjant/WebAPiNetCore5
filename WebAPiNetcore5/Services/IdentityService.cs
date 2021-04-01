@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using WebApiNetcore5.Model;
@@ -51,9 +52,28 @@ namespace WebAPiNetcore5.Services
 
             var TokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor();
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
 
 
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, newUser.Email),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Email, newUser.Email),
+                    new Claim("id", newUser.Id)
+                }),
+                Expires = DateTime.UtcNow.AddHours(3.00),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = TokenHandler.CreateToken(tokenDescriptor);
+
+            return new AuthenticationResult
+            {
+                IsSucces = true,
+                Token = TokenHandler.WriteToken(token)
+            };
         }
     }
 }
