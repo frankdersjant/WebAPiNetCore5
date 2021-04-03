@@ -16,7 +16,7 @@ namespace WebAPiNetcore5.Controllers.V1
             _identityService = identityService;
         }
 
-        [HttpPost("api/v1/Register")]
+        [HttpPost("api/v1/Identity")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequest userRegistrationRequest)
         {
 

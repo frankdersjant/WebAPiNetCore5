@@ -1,19 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebApiNetcore5.DAL;
 using WebAPiNetcore5;
-using Xunit;
+using WebAPiNetcore5.Controllers.V1.Request;
+using WebAPiNetcore5.Controllers.V1.Response;
 
 namespace WebApiNetcore5.IntegrationTest
 {
     public class BaseClassIntegrationTest
     {
-        private readonly HttpClient _client;
+        protected readonly HttpClient _client;
 
         public BaseClassIntegrationTest()
         {
@@ -25,10 +27,10 @@ namespace WebApiNetcore5.IntegrationTest
                         services.RemoveAll(typeof(DataContext));
                         services.AddDbContext<DataContext>(options =>
                         {
-                            options.UseInMemoryDatabase("testdb");
+                            options.UseInMemoryDatabase("testdbinmemory");
                         });
                     });
-                };
+                });
 
             _client = appFactory.CreateClient();
         }
@@ -40,15 +42,15 @@ namespace WebApiNetcore5.IntegrationTest
 
         private async Task<string> GetJwtAsync()
         {
+            var response = await _client.PostAsJsonAsync("http://localhost:5000/api/v1/Identity", new UserRegistrationRequest
+            {
+                Email = "integration@test.com",
+                Password = "frank1234!"
+            });
 
-            throw new NotImplementedException();
-        }
+            var RegistrationResponse = await response.Content.ReadAsAsync<AuthSuccesResponse>();
 
-        [Fact]
-        public async Task Test1()
-        {
-            //I HATE MAGIC STRINGS!!!
-            var response = await _client.GetAsync("http://localhost:5000/api/v1/todos");
+            return RegistrationResponse.Token;
         }
     }
 }
