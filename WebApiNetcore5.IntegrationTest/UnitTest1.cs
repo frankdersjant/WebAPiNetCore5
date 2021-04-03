@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc.Testing;
-using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WebAPiNetcore5;
@@ -19,6 +18,7 @@ namespace WebApiNetcore5.IntegrationTest
         [Fact]
         public async Task Test1()
         {
+            //I HATE MAGIC STRINGS!!!
             var response = await _client.GetAsync("http://localhost:5000/api/v1/todos");
         }
     }
