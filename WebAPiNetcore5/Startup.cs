@@ -25,8 +25,8 @@ namespace WebAPiNetcore5
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             SwaggerOptions swaggeroptions; 
-            if (env.IsDevelopment())
-            {
+          //  if (env.IsDevelopment())
+          //  {
                 app.UseDeveloperExceptionPage();
 
                 app.UseHttpsRedirection();
@@ -53,11 +53,11 @@ namespace WebAPiNetcore5
 
                 //???
                 //app.UseMvc();
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 app.UseHsts();
-            }
+            //}
            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -65,7 +65,7 @@ namespace WebAPiNetcore5
             app.UseRouting();
 
             app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

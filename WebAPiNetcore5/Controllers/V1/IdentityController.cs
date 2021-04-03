@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using WebApiNetcore5.Services;
 using WebAPiNetcore5.Controllers.V1.Request;
@@ -18,6 +19,16 @@ namespace WebAPiNetcore5.Controllers.V1
         [HttpPost("api/v1/Register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequest userRegistrationRequest)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new AuthFailureResponse
+                {
+                    Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
+
+                });
+            }
+
             var authResponse = await _identityService.RegisterAsync(userRegistrationRequest.Email, userRegistrationRequest.Password);
 
             if (!authResponse.IsSucces)
