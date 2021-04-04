@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using WebApiNetcore5.Model;
 using WebApiNetcore5.Services;
+using WebAPiNetcore5.Controllers.V1.Request;
+using WebAPiNetcore5.Extensions;
 
 namespace WebAPiNetcore5.Controllers.V1
 {
@@ -34,6 +37,18 @@ namespace WebAPiNetcore5.Controllers.V1
         [HttpGet("api/v1/todos/GetTodos")]
         public async Task<IActionResult> GetAllTodos()
         {
+            return Ok(await _todosService.getAllTodosAsync());
+        }
+
+        [HttpGet("api/v1/todos/Create")]
+        public async Task<IActionResult> Create([FromBody] CreatePostRequest createPostRequest)
+        {
+            Todos newTodos = new Todos
+            {
+                Name = createPostRequest.TodoName,
+                UserId = HttpContext.GetUserId()
+            };
+
             return Ok(await _todosService.getAllTodosAsync());
         }
     }
