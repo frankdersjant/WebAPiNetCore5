@@ -17,7 +17,7 @@ namespace WebApiNetcore5.IntegrationTest
             await AuthenticateAsync();
 
             //act
-            var response = await _client.GetAsync("http://localhost:5000/api/v1/todos/Getall");
+            var response = await _client.GetAsync("http://localhost:5000/api/v1/todos/GetTodos");
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);

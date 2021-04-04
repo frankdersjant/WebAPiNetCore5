@@ -42,10 +42,10 @@ namespace WebApiNetcore5.IntegrationTest
 
         private async Task<string> GetJwtAsync()
         {
-            var response = await _client.PostAsJsonAsync("http://localhost:5000/api/v1/Identity", new UserRegistrationRequest
+            var response = await _client.PostAsJsonAsync("http://localhost:5000/api/v1/Identity/Register", new UserRegistrationRequest
             {
                 Email = "integration@test.com",
-                Password = "frank1234!"
+                Password = "Frank1234!"
             });
 
             var RegistrationResponse = await response.Content.ReadAsAsync<AuthSuccesResponse>();
