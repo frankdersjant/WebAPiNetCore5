@@ -15,6 +15,11 @@ namespace WebApiNetcore5.Services
             _dataContext  = dataContext;
         }
 
+        public async Task CreatePostAsync(Todos todo)
+        {
+            await _dataContext.Todos.AddAsync(todo);
+        }
+
         public async Task<IEnumerable<Todos>> getAllTodosAsync()
         {
             return await _dataContext.Todos.ToListAsync();

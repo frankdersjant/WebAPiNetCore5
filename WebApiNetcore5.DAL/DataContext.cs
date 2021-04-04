@@ -12,7 +12,6 @@ namespace WebApiNetcore5.DAL
 
         }
         public DbSet<Todos> Todos { get; set; }
-        public DbSet<Todo> Todo { get; set; }
 
     }
 }

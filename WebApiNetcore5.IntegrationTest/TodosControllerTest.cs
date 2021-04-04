@@ -21,7 +21,7 @@ namespace WebApiNetcore5.IntegrationTest
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            (await response.Content.ReadAsAsync<List<Todo>>()).Should().BeEmpty();
+            (await response.Content.ReadAsAsync<Todos>()).Should().NotBeNull();
 
         }
     }

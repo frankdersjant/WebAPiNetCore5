@@ -24,15 +24,6 @@ namespace WebAPiNetcore5.Controllers.V1
             _todosService = todoService;
         }
 
-        [HttpGet("api/v1/todos")]
-        public async Task<IActionResult> GetAll()
-        {
-            return Ok(await _todosService.getAllTodosAsync());
-        }
-
-
-
-
         //http://localhost:5000/api/v1/todos/gettodos        
         [HttpGet("api/v1/todos/GetTodos")]
         public async Task<IActionResult> GetAllTodos()
@@ -40,7 +31,7 @@ namespace WebAPiNetcore5.Controllers.V1
             return Ok(await _todosService.getAllTodosAsync());
         }
 
-        [HttpGet("api/v1/todos/Create")]
+        [HttpPost("api/v1/todos/Create")]
         public async Task<IActionResult> Create([FromBody] CreatePostRequest createPostRequest)
         {
             Todos newTodos = new Todos
