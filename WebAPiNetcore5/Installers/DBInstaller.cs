@@ -11,7 +11,9 @@ namespace WebAPiNetcore5.Installers
     {
         public void InstallService(IServiceCollection services, IConfiguration Configuration)
         {
-            services.AddScoped<TodoService, TodoService>();
+            services.AddScoped<ITodosService, TodoService>();
+
+          //  services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase());
 
             services.AddDbContext<DataContext>(options =>
                options.UseSqlServer(

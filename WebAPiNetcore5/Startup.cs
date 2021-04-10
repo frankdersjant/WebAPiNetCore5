@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using WebApiNetcore5.DAL;
 using WebAPiNetcore5.Installers;
 using WebAPiNetcore5.Options;
 
@@ -24,41 +25,33 @@ namespace WebAPiNetcore5
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            SwaggerOptions swaggeroptions; 
-          //  if (env.IsDevelopment())
-          //  {
-                app.UseDeveloperExceptionPage();
+            SwaggerOptions swaggeroptions;
+            app.UseDeveloperExceptionPage();
 
-                app.UseHttpsRedirection();
-                app.UseStaticFiles();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
-                app.UseAuthentication();
+            app.UseAuthentication();
 
-                ////Swagger - note new usings
-                app.UseSwagger();
+            ////Swagger - note new usings
+            app.UseSwagger();
 
-                swaggeroptions = new SwaggerOptions();
-                Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggeroptions);
+            swaggeroptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggeroptions);
 
-                app.UseSwagger(option =>
-                {
-                    option.RouteTemplate = swaggeroptions.JsonRoute;
-                });
+            app.UseSwagger(option =>
+            {
+                option.RouteTemplate = swaggeroptions.JsonRoute;
+            });
 
-                app.UseSwaggerUI(option =>
-                {
-                    option.SwaggerEndpoint(swaggeroptions.UiEndpoint, swaggeroptions.Description);
-                });
-                //end swagger
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint(swaggeroptions.UiEndpoint, swaggeroptions.Description);
+            });
+            //end swagger
 
-                //???
-                //app.UseMvc();
-            //}
-            //else
-            //{
-                app.UseHsts();
-            //}
-           
+            app.UseHsts();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

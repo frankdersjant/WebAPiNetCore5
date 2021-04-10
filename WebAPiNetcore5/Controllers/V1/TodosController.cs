@@ -32,11 +32,14 @@ namespace WebAPiNetcore5.Controllers.V1
         }
 
         [HttpPost("api/v1/todos/Create")]
-        public async Task<IActionResult> Create([FromBody] CreatePostRequest createPostRequest)
+        public async Task<IActionResult> Create([FromBody] CreateTodoRequest createTodoRequest)
         {
+            if (!ModelState.IsValid)
+            { 
+            }
             Todos newTodos = new Todos
             {
-                Name = createPostRequest.TodoName,
+                Name = createTodoRequest.TodoName,
                 UserId = HttpContext.GetUserId()
             };
 

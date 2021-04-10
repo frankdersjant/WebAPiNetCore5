@@ -25,9 +25,10 @@ namespace WebApiNetcore5.IntegrationTest
                     builder.ConfigureServices(services =>
                     {
                         services.RemoveAll(typeof(DataContext));
+                        services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase(databaseName: "testdbinmemory"), ServiceLifetime.Scoped, ServiceLifetime.Scoped);
                         services.AddDbContext<DataContext>(options =>
                         {
-                            options.UseInMemoryDatabase("testdbinmemory");
+                            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase(databaseName: "testdbinmemory"), ServiceLifetime.Scoped, ServiceLifetime.Scoped);
                         });
                     });
                 });

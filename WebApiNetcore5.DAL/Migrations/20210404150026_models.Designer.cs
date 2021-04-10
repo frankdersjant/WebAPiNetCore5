@@ -10,15 +10,15 @@ using WebApiNetcore5.DAL;
 namespace WebApiNetcore5.DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210309143902_First")]
-    partial class First
+    [Migration("20210404150026_models")]
+    partial class models
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.3")
+                .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -221,26 +221,22 @@ namespace WebApiNetcore5.DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WebApiNetcore5.Model.Todo", b =>
-                {
-                    b.Property<int>("TodoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("TodoId");
-
-                    b.ToTable("Todo");
-                });
-
             modelBuilder.Entity("WebApiNetcore5.Model.Todos", b =>
                 {
-                    b.Property<int>("ToolsId")
+                    b.Property<int>("TodosId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.HasKey("ToolsId");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("TodosId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Todos");
                 });
@@ -294,6 +290,15 @@ namespace WebApiNetcore5.DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApiNetcore5.Model.Todos", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
