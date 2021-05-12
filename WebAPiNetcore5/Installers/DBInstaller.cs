@@ -13,8 +13,6 @@ namespace WebAPiNetcore5.Installers
         {
             services.AddScoped<ITodosService, TodoService>();
 
-          //  services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase());
-
             services.AddDbContext<DataContext>(options =>
                options.UseSqlServer(
                    Configuration.GetConnectionString("DefaultConnection")));
